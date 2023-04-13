@@ -1,5 +1,7 @@
 package com.accenture.codingtest.springbootcodingtest.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +15,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Project {
 
     @Id
@@ -25,5 +28,6 @@ public class Project {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "PROJECT_ID", referencedColumnName = "ID")
+    @JsonManagedReference
     private List<User> users;
 }
