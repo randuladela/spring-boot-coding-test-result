@@ -3,6 +3,7 @@ package com.accenture.codingtest.springbootcodingtest.controller;
 import com.accenture.codingtest.springbootcodingtest.dto.TaskDto;
 import com.accenture.codingtest.springbootcodingtest.entity.Task;
 import com.accenture.codingtest.springbootcodingtest.exception.TaskNotFoundException;
+import com.accenture.codingtest.springbootcodingtest.exception.UnAuthorized;
 import com.accenture.codingtest.springbootcodingtest.service.TaskService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,10 +22,10 @@ public class TaskController {
 
     private TaskService taskService;
 
-    @PostMapping(value = "/tasks", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Task createTask(@RequestBody TaskDto taskDto) {
+    @PostMapping(value = "/tasks/roles/{role_id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Task createTask(@RequestBody TaskDto taskDto, @PathVariable("role_id") String roleId) throws UnAuthorized {
         log.info("Creating task");
-        return taskService.createTask(taskDto);
+        return taskService.createTask(taskDto, roleId);
     }
 
     @GetMapping(value = "/tasks", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -3,6 +3,7 @@ package com.accenture.codingtest.springbootcodingtest.advisor;
 import com.accenture.codingtest.springbootcodingtest.dto.ErrorResponseDto;
 import com.accenture.codingtest.springbootcodingtest.exception.ProjectNotFound;
 import com.accenture.codingtest.springbootcodingtest.exception.TaskNotFoundException;
+import com.accenture.codingtest.springbootcodingtest.exception.UnAuthorized;
 import com.accenture.codingtest.springbootcodingtest.exception.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,15 @@ public class GlobalExceptionHandler {
         errorResponseDto.setErrDsc(exception.getLocalizedMessage());
 
         return new ResponseEntity<>(errorResponseDto, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({UnAuthorized.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Object> handleUnauthorizedExceptions(UnAuthorized exception) {
+        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+        errorResponseDto.setErrDsc(exception.getLocalizedMessage());
+
+        return new ResponseEntity<>(errorResponseDto, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(Exception.class)

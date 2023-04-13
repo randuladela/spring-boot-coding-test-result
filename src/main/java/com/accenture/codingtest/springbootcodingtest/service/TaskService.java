@@ -3,13 +3,14 @@ package com.accenture.codingtest.springbootcodingtest.service;
 import com.accenture.codingtest.springbootcodingtest.dto.TaskDto;
 import com.accenture.codingtest.springbootcodingtest.entity.Task;
 import com.accenture.codingtest.springbootcodingtest.exception.TaskNotFoundException;
+import com.accenture.codingtest.springbootcodingtest.exception.UnAuthorized;
 
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public interface TaskService {
-    Task createTask(TaskDto taskDto);
+    Task createTask(TaskDto taskDto, String roleId) throws UnAuthorized;
 
     List<Task> getTasks();
 

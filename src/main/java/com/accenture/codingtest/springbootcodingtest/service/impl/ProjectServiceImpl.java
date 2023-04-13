@@ -1,11 +1,13 @@
 package com.accenture.codingtest.springbootcodingtest.service.impl;
 
-import com.accenture.codingtest.springbootcodingtest.ErrorDsc;
 import com.accenture.codingtest.springbootcodingtest.dto.ProjectDto;
 import com.accenture.codingtest.springbootcodingtest.entity.Project;
+import com.accenture.codingtest.springbootcodingtest.enums.Role;
 import com.accenture.codingtest.springbootcodingtest.exception.ProjectNotFound;
+import com.accenture.codingtest.springbootcodingtest.exception.UnAuthorized;
 import com.accenture.codingtest.springbootcodingtest.repository.ProjectRepository;
 import com.accenture.codingtest.springbootcodingtest.service.ProjectService;
+import com.accenture.codingtest.springbootcodingtest.util.ErrorDsc;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -28,8 +30,13 @@ public class ProjectServiceImpl implements ProjectService {
      * @return
      */
     @Override
-    public Project createProject(ProjectDto projectDto) {
-        return projectRepository.save(mapper.map(projectDto, Project.class));
+    public Project createProject(ProjectDto projectDto, String roleId) throws UnAuthorized {
+        if (roleId.equalsIgnoreCase(Role.PRODUCT_OWNER.toString())) {
+            return projectRepository.save(mapper.map(projectDto, Project.class));
+        } else {
+            throw new UnAuthorized(ErrorDsc.ERR_DSC_UNAUTHORIZED);
+        }
+
     }
 
     /**

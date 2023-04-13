@@ -3,6 +3,7 @@ package com.accenture.codingtest.springbootcodingtest.controller;
 import com.accenture.codingtest.springbootcodingtest.dto.ProjectDto;
 import com.accenture.codingtest.springbootcodingtest.entity.Project;
 import com.accenture.codingtest.springbootcodingtest.exception.ProjectNotFound;
+import com.accenture.codingtest.springbootcodingtest.exception.UnAuthorized;
 import com.accenture.codingtest.springbootcodingtest.service.ProjectService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +21,10 @@ public class ProjectController {
 
     private ProjectService projectService;
 
-    @PostMapping(value = "/projects", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Project createProject(@RequestBody ProjectDto projectDto) {
+    @PostMapping(value = "/projects/roles/{role_id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Project createProject(@RequestBody ProjectDto projectDto, @PathVariable("role_id") String roleId) throws UnAuthorized {
         log.info("Creating project");
-        return projectService.createProject(projectDto);
+        return projectService.createProject(projectDto, roleId);
     }
 
 
