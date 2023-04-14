@@ -10,6 +10,8 @@ import com.accenture.codingtest.springbootcodingtest.service.ProjectService;
 import com.accenture.codingtest.springbootcodingtest.util.ErrorDsc;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,8 +47,25 @@ public class ProjectServiceImpl implements ProjectService {
      * @return
      */
     @Override
-    public List<Project> getProjects() {
-        return projectRepository.findAll();
+    public List<Project> getProjects(String q, Integer pageIndex, Integer pageSize, String sortBy, String sortDirection) {
+        if (pageIndex == null) {
+            pageIndex = 0;
+        }
+
+        if (pageSize == null) {
+            pageSize = 3;
+        }
+
+        if (sortBy == null) {
+            sortBy = "name";
+        }
+
+        if (sortDirection == null) {
+            sortDirection = "ASC";
+        }
+
+        Sort sortByField = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(Sort.Direction.ASC, sortBy) : Sort.by(Sort.Direction.DESC, sortBy);
+        return projectRepository.findAll(PageRequest.of(pageIndex, pageSize).withSort(sortByField)).getContent();
     }
 
     /**

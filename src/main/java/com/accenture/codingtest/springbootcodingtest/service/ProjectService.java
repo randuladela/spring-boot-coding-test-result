@@ -11,7 +11,7 @@ import java.util.UUID;
 public interface ProjectService {
     Project createProject(ProjectDto projectDto, String roleId) throws UnAuthorized;
 
-    List<Project> getProjects();
+    List<Project> getProjects(String q, Integer pageIndex, Integer pageSize, String sortBy, String sortDirection);
 
     Project getProject(UUID projectId) throws ProjectNotFound;
 

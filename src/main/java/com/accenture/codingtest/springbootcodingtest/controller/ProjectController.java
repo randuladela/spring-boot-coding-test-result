@@ -29,9 +29,10 @@ public class ProjectController {
 
 
     @GetMapping(value = "/projects", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Project> getAllProjects() {
+    public List<Project> getAllProjects(@RequestParam(value = "q") String q, @RequestParam(required = false) Integer pageIndex,
+                                        @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) String sortBy, @RequestParam(required = false) String sortDirection) {
         log.info("Getting all projects");
-        return projectService.getProjects();
+        return projectService.getProjects(q, pageIndex, pageSize, sortBy, sortDirection);
     }
 
     @GetMapping(value = "/projects/{project_id}", produces = MediaType.APPLICATION_JSON_VALUE)
