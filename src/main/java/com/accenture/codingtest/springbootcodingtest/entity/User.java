@@ -32,5 +32,8 @@ public class User {
     @JsonManagedReference
     private Task task;
 
+    @Column(name = "ROLE", length = 60, nullable = false)
+    private String role;
+
 
 }

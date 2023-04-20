@@ -2,7 +2,6 @@ package com.accenture.codingtest.springbootcodingtest.service.impl;
 
 import com.accenture.codingtest.springbootcodingtest.dto.ProjectDto;
 import com.accenture.codingtest.springbootcodingtest.entity.Project;
-import com.accenture.codingtest.springbootcodingtest.enums.Role;
 import com.accenture.codingtest.springbootcodingtest.exception.ProjectNotFound;
 import com.accenture.codingtest.springbootcodingtest.exception.UnAuthorized;
 import com.accenture.codingtest.springbootcodingtest.repository.ProjectRepository;
@@ -32,12 +31,8 @@ public class ProjectServiceImpl implements ProjectService {
      * @return
      */
     @Override
-    public Project createProject(ProjectDto projectDto, String roleId) throws UnAuthorized {
-        if (roleId.equalsIgnoreCase(Role.PRODUCT_OWNER.toString())) {
-            return projectRepository.save(mapper.map(projectDto, Project.class));
-        } else {
-            throw new UnAuthorized(ErrorDsc.ERR_DSC_UNAUTHORIZED);
-        }
+    public Project createProject(ProjectDto projectDto) throws UnAuthorized {
+        return projectRepository.save(mapper.map(projectDto, Project.class));
 
     }
 

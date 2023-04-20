@@ -4,7 +4,6 @@ import com.accenture.codingtest.springbootcodingtest.dto.UserDto;
 import com.accenture.codingtest.springbootcodingtest.entity.Project;
 import com.accenture.codingtest.springbootcodingtest.entity.Task;
 import com.accenture.codingtest.springbootcodingtest.entity.User;
-import com.accenture.codingtest.springbootcodingtest.enums.Role;
 import com.accenture.codingtest.springbootcodingtest.exception.ProjectNotFound;
 import com.accenture.codingtest.springbootcodingtest.exception.TaskNotFoundException;
 import com.accenture.codingtest.springbootcodingtest.exception.UnAuthorized;
@@ -15,6 +14,7 @@ import com.accenture.codingtest.springbootcodingtest.repository.UserRepository;
 import com.accenture.codingtest.springbootcodingtest.service.UserService;
 import com.accenture.codingtest.springbootcodingtest.util.ErrorDsc;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -34,6 +34,8 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
+    private PasswordEncoder passwordEncoder;
+
     /**
      * Creating user
      *
@@ -43,26 +45,21 @@ public class UserServiceImpl implements UserService {
      * @throws ProjectNotFound
      */
     @Override
-    public String createUser(UserDto userDto, String roleId) throws TaskNotFoundException, ProjectNotFound, UnAuthorized {
+    public String createUser(UserDto userDto) throws TaskNotFoundException, ProjectNotFound, UnAuthorized {
+        User user = new User();
+        user.setUserName(userDto.getUserName());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setRole(userDto.getRole());
+        Project project = projectRepository.findById(userDto.getProjectId()).orElseThrow(() -> new ProjectNotFound(ErrorDsc.ERR_DSC_PROJECT_NOT_FOUND));
 
-        if (roleId.equalsIgnoreCase(Role.ADMIN.toString())) {
-            User user = new User();
-            user.setUserName(userDto.getUserName());
-            user.setPassword(userDto.getPassword());
-            Project project = projectRepository.findById(userDto.getProjectId()).orElseThrow(() -> new ProjectNotFound(ErrorDsc.ERR_DSC_PROJECT_NOT_FOUND));
+        List<User> users = new ArrayList<>();
+        users.add(user);
+        Task task = taskRepository.findById(userDto.getTaskId()).orElseThrow(() -> new TaskNotFoundException(ErrorDsc.ERR_DSC_TASK_NOT_FOUND));
+        user.setTask(task);
+        project.setUsers(users);
 
-            List<User> users = new ArrayList<>();
-            users.add(user);
-            Task task = taskRepository.findById(userDto.getTaskId()).orElseThrow(() -> new TaskNotFoundException(ErrorDsc.ERR_DSC_TASK_NOT_FOUND));
-            user.setTask(task);
-            project.setUsers(users);
-
-            userRepository.save(user);
-            return "User created successfully";
-
-        } else {
-            throw new UnAuthorized(ErrorDsc.ERR_DSC_UNAUTHORIZED);
-        }
+        userRepository.save(user);
+        return "User created successfully";
 
     }
 
@@ -72,12 +69,8 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public List<User> getUsers(String roleId) throws UnAuthorized {
-        if (roleId.equalsIgnoreCase(Role.ADMIN.toString())) {
-            return userRepository.findAll();
-        } else {
-            throw new UnAuthorized(ErrorDsc.ERR_DSC_UNAUTHORIZED);
-        }
+    public List<User> getUsers() throws UnAuthorized {
+        return userRepository.findAll();
 
     }
 
@@ -89,12 +82,8 @@ public class UserServiceImpl implements UserService {
      * @throws UserNotFoundException
      */
     @Override
-    public User getUser(UUID userId, String roleId) throws UserNotFoundException, UnAuthorized {
-        if (roleId.equalsIgnoreCase(Role.ADMIN.toString())) {
-            return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(ErrorDsc.ERR_DSC_USER_NOT_FOUND));
-        } else {
-            throw new UnAuthorized(ErrorDsc.ERR_DSC_UNAUTHORIZED);
-        }
+    public User getUser(UUID userId) throws UserNotFoundException, UnAuthorized {
+        return userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(ErrorDsc.ERR_DSC_USER_NOT_FOUND));
 
     }
 
@@ -107,15 +96,11 @@ public class UserServiceImpl implements UserService {
      * @throws UserNotFoundException
      */
     @Override
-    public User updateUser(UserDto userDto, UUID userId, String roleId) throws UserNotFoundException, UnAuthorized {
-        if (roleId.equalsIgnoreCase(Role.ADMIN.toString())) {
-            User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(ErrorDsc.ERR_DSC_USER_NOT_FOUND));
-            user.setUserName(userDto.getUserName());
-            user.setPassword(userDto.getPassword());
-            return userRepository.save(user);
-        } else {
-            throw new UnAuthorized(ErrorDsc.ERR_DSC_UNAUTHORIZED);
-        }
+    public User updateUser(UserDto userDto, UUID userId) throws UserNotFoundException, UnAuthorized {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(ErrorDsc.ERR_DSC_USER_NOT_FOUND));
+        user.setUserName(userDto.getUserName());
+        user.setPassword(userDto.getPassword());
+        return userRepository.save(user);
     }
 
     /**
@@ -127,20 +112,16 @@ public class UserServiceImpl implements UserService {
      * @throws UserNotFoundException
      */
     @Override
-    public User updateUserPartially(Map<String, Object> fields, UUID userId, String roleId) throws UserNotFoundException, UnAuthorized {
-        if (roleId.equalsIgnoreCase(Role.ADMIN.toString())) {
-            User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(ErrorDsc.ERR_DSC_USER_NOT_FOUND));
+    public User updateUserPartially(Map<String, Object> fields, UUID userId) throws UserNotFoundException, UnAuthorized {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(ErrorDsc.ERR_DSC_USER_NOT_FOUND));
 
-            fields.forEach((requestField, value) -> {
-                Field field = ReflectionUtils.findField(User.class, requestField);
-                field.setAccessible(true);
-                ReflectionUtils.setField(field, user, value);
-            });
+        fields.forEach((requestField, value) -> {
+            Field field = ReflectionUtils.findField(User.class, requestField);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, user, value);
+        });
 
-            return userRepository.save(user);
-        } else {
-            throw new UnAuthorized(ErrorDsc.ERR_DSC_UNAUTHORIZED);
-        }
+        return userRepository.save(user);
     }
 
     /**
@@ -151,13 +132,9 @@ public class UserServiceImpl implements UserService {
      * @throws UserNotFoundException
      */
     @Override
-    public String deleteUser(UUID userId, String roleId) throws UserNotFoundException, UnAuthorized {
-        if (roleId.equalsIgnoreCase(Role.ADMIN.toString())) {
-            User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(ErrorDsc.ERR_DSC_USER_NOT_FOUND));
-            userRepository.deleteById(user.getId());
-            return "User successfully deleted";
-        } else {
-            throw new UnAuthorized(ErrorDsc.ERR_DSC_UNAUTHORIZED);
-        }
+    public String deleteUser(UUID userId) throws UserNotFoundException, UnAuthorized {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(ErrorDsc.ERR_DSC_USER_NOT_FOUND));
+        userRepository.deleteById(user.getId());
+        return "User successfully deleted";
     }
 }

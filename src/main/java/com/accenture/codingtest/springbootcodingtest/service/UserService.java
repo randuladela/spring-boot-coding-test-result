@@ -14,15 +14,15 @@ import java.util.UUID;
 
 public interface UserService {
 
-    String createUser(UserDto userDto, String roleId) throws TaskNotFoundException, ProjectNotFound, UnAuthorized;
+    String createUser(UserDto userDto) throws TaskNotFoundException, ProjectNotFound, UnAuthorized;
 
-    List<User> getUsers(String roleId) throws UnAuthorized;
+    List<User> getUsers() throws UnAuthorized;
 
-    User getUser(UUID userId, String roleId) throws UserNotFoundException, UnAuthorized;
+    User getUser(UUID userId) throws UserNotFoundException, UnAuthorized;
 
-    User updateUser(UserDto user, UUID userId, String roleId) throws UserNotFoundException, UnAuthorized;
+    User updateUser(UserDto user, UUID userId) throws UserNotFoundException, UnAuthorized;
 
-    User updateUserPartially(Map<String, Object> map, UUID userId, String roleId) throws UserNotFoundException, UnAuthorized;
+    User updateUserPartially(Map<String, Object> map, UUID userId) throws UserNotFoundException, UnAuthorized;
 
-    String deleteUser(UUID userId, String roleId) throws UserNotFoundException, UnAuthorized;
+    String deleteUser(UUID userId) throws UserNotFoundException, UnAuthorized;
 }

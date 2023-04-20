@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public interface TaskService {
-    Task createTask(TaskDto taskDto, String roleId) throws UnAuthorized;
+    Task createTask(TaskDto taskDto) throws UnAuthorized;
 
     List<Task> getTasks();
 

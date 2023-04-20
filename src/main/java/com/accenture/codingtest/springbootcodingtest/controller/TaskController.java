@@ -8,6 +8,7 @@ import com.accenture.codingtest.springbootcodingtest.service.TaskService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,37 +23,43 @@ public class TaskController {
 
     private TaskService taskService;
 
-    @PostMapping(value = "/tasks/roles/{role_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Task createTask(@RequestBody TaskDto taskDto, @PathVariable("role_id") String roleId) throws UnAuthorized {
+    @PostMapping(value = "/tasks", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('PRODUCT_OWNER')")
+    public Task createTask(@RequestBody TaskDto taskDto) throws UnAuthorized {
         log.info("Creating task");
-        return taskService.createTask(taskDto, roleId);
+        return taskService.createTask(taskDto);
     }
 
     @GetMapping(value = "/tasks", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('PRODUCT_OWNER')")
     public List<Task> getAllTasks() {
         log.info("Getting all task");
         return taskService.getTasks();
     }
 
     @GetMapping(value = "/tasks/{task_id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('PRODUCT_OWNER')")
     public Task getTask(@PathVariable("task_id") UUID taskId) throws TaskNotFoundException {
         log.info("Getting a task {} ", taskId.toString());
         return taskService.getTask(taskId);
     }
 
     @PutMapping(value = "/tasks/{task_id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('PRODUCT_OWNER')")
     public Task updateTask(@RequestBody TaskDto taskDto, @PathVariable("task_id") UUID taskId) throws TaskNotFoundException {
         log.info("Updating a task {} ", taskId.toString());
         return taskService.updateTask(taskDto, taskId);
     }
 
     @PatchMapping(value = "/tasks/{task_id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('PRODUCT_OWNER')")
     public Task updateTaskPartially(@RequestBody Map<String, Object> updatedValues, @PathVariable("task_id") UUID taskId) throws TaskNotFoundException {
         log.info("Updating a task {} ", taskId.toString());
         return taskService.updateTaskPartially(updatedValues, taskId);
     }
 
     @DeleteMapping(value = "/tasks/{task_id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasAuthority('PRODUCT_OWNER')")
     public String deleteTask(@PathVariable("task_id") UUID taskId) throws TaskNotFoundException {
         log.info("Deleting a task {} ", taskId.toString());
         return taskService.deleteTask(taskId);

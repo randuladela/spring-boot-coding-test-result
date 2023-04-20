@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ProjectService {
-    Project createProject(ProjectDto projectDto, String roleId) throws UnAuthorized;
+    Project createProject(ProjectDto projectDto) throws UnAuthorized;
 
     List<Project> getProjects(String q, Integer pageIndex, Integer pageSize, String sortBy, String sortDirection);
 

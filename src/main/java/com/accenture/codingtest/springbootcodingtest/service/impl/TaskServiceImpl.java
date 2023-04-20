@@ -2,7 +2,6 @@ package com.accenture.codingtest.springbootcodingtest.service.impl;
 
 import com.accenture.codingtest.springbootcodingtest.dto.TaskDto;
 import com.accenture.codingtest.springbootcodingtest.entity.Task;
-import com.accenture.codingtest.springbootcodingtest.enums.Role;
 import com.accenture.codingtest.springbootcodingtest.enums.TaskStatus;
 import com.accenture.codingtest.springbootcodingtest.exception.TaskNotFoundException;
 import com.accenture.codingtest.springbootcodingtest.exception.UnAuthorized;
@@ -34,14 +33,10 @@ public class TaskServiceImpl implements TaskService {
      * @return
      */
     @Override
-    public Task createTask(TaskDto taskDto, String roleId) throws UnAuthorized {
-        if (roleId.equalsIgnoreCase(Role.PRODUCT_OWNER.toString())) {
-            Task task = mapper.map(taskDto, Task.class);
-            task.setStatus(TaskStatus.NOT_STARTED.toString());
-            return taskRepository.save(task);
-        } else {
-            throw new UnAuthorized(ErrorDsc.ERR_DSC_UNAUTHORIZED);
-        }
+    public Task createTask(TaskDto taskDto) throws UnAuthorized {
+        Task task = mapper.map(taskDto, Task.class);
+        task.setStatus(TaskStatus.NOT_STARTED.toString());
+        return taskRepository.save(task);
 
     }
 
