@@ -31,7 +31,7 @@ public class TokenController {
      * @return
      */
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getToken(@RequestBody AuthRequestDto authRequest) {
+    public String login(@RequestBody AuthRequestDto authRequest) {
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword()));
 
         if (authenticate.isAuthenticated()) {

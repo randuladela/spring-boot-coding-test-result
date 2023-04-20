@@ -1,0 +1,588 @@
+{
+  "info": {
+    "_postman_id": "d6e4836b-8ad9-4150-807a-9ce9a87e249e",
+    "name": "PROJECT_MGT_APP with AUTH",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Project",
+      "item": [
+        {
+          "name": "Create Project",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYW5kdWxhIiwiaWF0IjoxNjgyMDIyODk3LCJleHAiOjE2ODIwMjQ2OTd9.H44VPh5FIITwfm5MMmuu4qynCgFiPb1NlCBJ6E6d5yw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"api\"    \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9191/api/v1/projects",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "projects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Project",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"api\"    \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9191/api/v1/projects/roles/product_owner",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "roles",
+                "product_owner"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Projects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9191/api/v1/projects?q=api",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "projects"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "api"
+                },
+                {
+                  "key": "pageIndex",
+                  "value": "0",
+                  "disabled": true
+                },
+                {
+                  "key": "pageSize",
+                  "value": "2",
+                  "disabled": true
+                },
+                {
+                  "key": "sortBy",
+                  "value": "name",
+                  "disabled": true
+                },
+                {
+                  "key": "sortDirection",
+                  "value": "ASC",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a project",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9191/api/v1/projects/e6c8f891-0191-4a4d-ac5b-4aa0e9e27e83",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "e6c8f891-0191-4a4d-ac5b-4aa0e9e27e83"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete project",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9191/api/v1/projects/e6c8f891-0191-4a4d-ac5b-4aa0e9e27e83",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "projects",
+                "e6c8f891-0191-4a4d-ac5b-4aa0e9e27e83"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Task",
+      "item": [
+        {
+          "name": "Create Task",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyYW5kdWxhIiwiaWF0IjoxNjgyMDIyODk3LCJleHAiOjE2ODIwMjQ2OTd9.H44VPh5FIITwfm5MMmuu4qynCgFiPb1NlCBJ6E6d5yw",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Exposing product API\",\r\n    \"description\": \"Exposing api documentation\",\r\n    \"status\": \"NOT_STARTED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9191/api/v1/tasks",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "tasks"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update task",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"create swagger doc\",\r\n    \"description\": \"Exposing api documentation\",\r\n    \"status\": \"NOT_STARTED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9191/api/v1/tasks",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "tasks"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Task Partially",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"create swagger doc\",\r\n    \"description\": \"Exposing api documentation\",\r\n    \"status\": \"NOT_STARTED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9191/api/v1/tasks",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "tasks"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Tasks",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9191/api/v1/tasks",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "tasks"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a task",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9191/api/v1/tasks/aef114f3-2240-43e0-aa29-f97d4115c046",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "tasks",
+                "aef114f3-2240-43e0-aa29-f97d4115c046"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a task",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9191/api/v1/tasks/aef114f3-2240-43e0-aa29-f97d4115c046",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "tasks",
+                "aef114f3-2240-43e0-aa29-f97d4115c046"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MjAyMzA1NSwiZXhwIjoxNjgyMDI0ODU1fQ.Aj74CFlr6L4-Zv9O90RZ0Hg5UVhsvdJ54Q9lx13_WbY",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userName\":\"Minol\",\r\n    \"password\":\"123458\",\r\n    \"role\":\"PRODUCT_OWNER\",\r\n    \"projectId\":\"a35f8660-6897-457f-9bf2-6b29028a1f26\",\r\n    \"taskId\":\"d8333c29-12e6-4303-8e75-c140d038706b\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9191/api/v1/users",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userName\":\"randula\",\r\n    \"password\":\"78962\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9191/api/v1/users/c70f265b-64d3-454f-ba1d-bafebd353ebe/roles/admin",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "c70f265b-64d3-454f-ba1d-bafebd353ebe",
+                "roles",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9191/api/v1/users/dfc3630c-e9c2-4d21-8730-4209b9e77042/roles/admin",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "dfc3630c-e9c2-4d21-8730-4209b9e77042",
+                "roles",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update User Partially",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userName\":\"dela\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9191/api/v1/users/62303862-e3ed-4e80-a1e5-93635e5321e2/roles/admin",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "62303862-e3ed-4e80-a1e5-93635e5321e2",
+                "roles",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Users",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userName\":\"randula\",\r\n    \"12345\":\"123458\",\r\n    \"taskId\":\"\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9191/api/v1/users/roles/admin",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "roles",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get an user",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userName\":\"randula\",\r\n    \"12345\":\"123458\",\r\n    \"taskId\":\"\"\r\n\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9191/api/v1/users/e6c8f891-0191-4a4d-ac5b-4aa0e9e27e83/roles/admin",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "e6c8f891-0191-4a4d-ac5b-4aa0e9e27e83",
+                "roles",
+                "admin"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Token",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"userName\":\"admin\",\r\n    \"password\":\"password\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:9191/api/v1/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "9191",
+              "path": [
+                "api",
+                "v1",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
