@@ -24,7 +24,13 @@ public class TokenController {
 
     private AuthenticationManager authenticationManager;
 
-    @PostMapping(value = "/token", produces = MediaType.APPLICATION_JSON_VALUE)
+    /**
+     * Once the login is successful user will receive a token
+     *
+     * @param authRequest
+     * @return
+     */
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getToken(@RequestBody AuthRequestDto authRequest) {
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword()));
 
