@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 @AllArgsConstructor
 @Slf4j
-public class TokenController {
+public class AuthController {
 
     private JWTService jwtService;
 
